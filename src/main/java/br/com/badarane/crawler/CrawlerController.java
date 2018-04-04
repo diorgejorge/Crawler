@@ -93,8 +93,7 @@ public class CrawlerController {
             }
             matchingWords.parallelStream().filter(s -> elementA.text().toLowerCase().indexOf(s.toLowerCase()) != -1).forEach(s ->
                     {
-                        LinksFound linksFound = null;
-                            linksFound = LinksFound.builder()
+                        LinksFound linksFound = LinksFound.builder()
                                     .htmlText(elementA.html())
                                     .urlEncontrada(URI.create(href))
                                     .urlOrigem(url)
