@@ -9,7 +9,6 @@ import org.apache.log4j.Logger;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Transient;
 import java.io.Serializable;
-import java.util.UUID;
 
 /**
  * Base class for ORM (Object-Relational Mapping). All classes that have {@code @Entity} should {@code extends}
@@ -26,8 +25,6 @@ public abstract class AbstractEntity implements Serializable, Cloneable {
 
     private final transient Logger logger = Logger.getLogger(AbstractEntity.class);
 
-    @Transient
-    private final UUID uuid = UUID.randomUUID();
 
     @Transient
     private boolean novo;
@@ -36,10 +33,6 @@ public abstract class AbstractEntity implements Serializable, Cloneable {
     private boolean selected;
 
     public abstract Object getId();
-
-    public UUID getUuid() {
-        return uuid;
-    }
 
     @Override
     public int hashCode() {

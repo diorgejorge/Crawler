@@ -80,7 +80,7 @@ public class CrawlerController {
     }
 
     private void checkMatchingWordsOnLinks(List<Element> elements, URI url) throws NoSuchAlgorithmException {
-        MessageDigest messageDigest = MessageDigest.getInstance("MD5");
+        MessageDigest messageDigest = MessageDigest.getInstance("SHA1");
         elements.parallelStream().forEach(elementA -> {
             String href = elementA.attr("href");
             try {
@@ -92,9 +92,14 @@ public class CrawlerController {
             }
             matchingWords.parallelStream().filter(s -> elementA.text().toLowerCase().indexOf(s.toLowerCase()) != -1).forEach(s ->
                     {
+                        byte[] mdbytes = messageDigest.digest(elementA.text().getBytes());
+                        StringBuffer sb = new StringBuffer();
 
+                        for (int i = 0; i < mdbytes.length; i++) {
+                            sb.append(Integer.toString((mdbytes[i] & 0xff) + 0x100, 16).substring(1));
+                        }
                         LinksFound linksFound = LinksFound.builder()
-                                .id(messageDigest.digest(elementA.text().getBytes()))
+                                .id(sb.toString())
                                 .htmlText(elementA.html())
                                 .urlEncontrada(URI.create(href))
                                 .urlOrigem(url)
