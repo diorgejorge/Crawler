@@ -1,7 +1,8 @@
-package br.com.badarane.controller;
+package com.github.diorgejorge.controller;
 
-import br.com.badarane.crawler.CrawlerController;
-import br.com.badarane.crawler.CrawlerDefinition;
+import com.github.diorgejorge.crawler.CrawlerController;
+import com.github.diorgejorge.crawler.CrawlerDefinition;
+import com.github.diorgejorge.utils.DAOFirebase;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -14,7 +15,7 @@ public class Main {
     public static void main(String[] args) {
         CrawlerDefinition crawlerDefinitionSurrenderAt20 = new CrawlerDefinition();
         crawlerDefinitionSurrenderAt20.setRulesRegexToNotVisit(".*\\.(bmp|gif|jpg|png)$","^(https:\\/\\/www\\.|https:\\/\\/)?[a-z0-9]+([\\-\\.]{1}[a-z0-9]+)*\\.[a-z]{2,5}(:[0-9]{1,5})?(\\/.*)?$");
-        CrawlerController crawlerController = new CrawlerController(DATABASE_URL+"/",crawlerDefinitionSurrenderAt20);
+        CrawlerController crawlerController = new CrawlerController(new DAOFirebase(DATABASE_URL),crawlerDefinitionSurrenderAt20);
         crawlerController.setMatchingWords("AVAILABLE");
         crawlerController.setMatchingWords("REWORK");
         crawlerController.setMatchingWords("RED POST");

@@ -1,4 +1,4 @@
-package br.com.badarane.utils;
+package com.github.diorgejorge.utils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

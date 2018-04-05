@@ -1,4 +1,4 @@
-package br.com.badarane.crawler;
+package com.github.diorgejorge.crawler;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
