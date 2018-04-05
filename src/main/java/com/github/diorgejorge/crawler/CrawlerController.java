@@ -15,6 +15,8 @@ import org.jsoup.nodes.Element;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -77,7 +79,8 @@ public class CrawlerController {
         }
     }
 
-    private void checkMatchingWordsOnLinks(List<Element> elements, URI url) {
+    private void checkMatchingWordsOnLinks(List<Element> elements, URI url) throws NoSuchAlgorithmException {
+        MessageDigest messageDigest = MessageDigest.getInstance("MD5");
         elements.parallelStream().forEach(elementA -> {
             String href = elementA.attr("href");
             try {
@@ -89,8 +92,9 @@ public class CrawlerController {
             }
             matchingWords.parallelStream().filter(s -> elementA.text().toLowerCase().indexOf(s.toLowerCase()) != -1).forEach(s ->
                     {
+
                         LinksFound linksFound = LinksFound.builder()
-                                .id(elementA.text().toUpperCase().replaceAll("[^\\dA-Za-z ]", " "))
+                                .id(messageDigest.digest(elementA.text().getBytes()))
                                 .htmlText(elementA.html())
                                 .urlEncontrada(URI.create(href))
                                 .urlOrigem(url)
